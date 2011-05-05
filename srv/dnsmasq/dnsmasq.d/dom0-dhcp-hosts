@@ -1,0 +1,39 @@
+##
+# wc1 f/rDNS
+
+# dhcp-host=00:21:5A:CA:03:5E,e3ab1,10.1.170.31 ### cm-01 static
+dhcp-host=00:21:5A:C8:7D:12,cm-02,10.1.170.32
+dhcp-host=00:21:5A:CA:04:14,e3ab3,10.1.170.33
+dhcp-host=00:21:5A:C8:7C:DC,e3ab4,10.1.170.34
+dhcp-host=00:21:5A:C8:70:3C,e3ab5,10.1.170.35
+dhcp-host=00:21:5A:C8:35:DC,e3ab6,10.1.170.36
+dhcp-host=00:21:5A:C8:7C:40,e3ab7,10.1.170.37
+dhcp-host=00:21:5A:C8:71:F8,e3ab8,10.1.170.38
+dhcp-host=00:21:5A:C8:36:D8,e3ab9,10.1.170.39
+dhcp-host=00:21:5A:C8:39:36,e3ab10,10.1.170.40
+dhcp-host=00:21:5A:C8:4C:8E,e3ab11,10.1.170.41
+dhcp-host=00:21:5A:C8:74:20,e3ab12,10.1.170.42
+dhcp-host=00:1E:0B:D6:30:EE,e3ab13,10.1.170.43
+dhcp-host=00:21:5A:C8:72:76,e3ab14,10.1.170.44
+dhcp-host=00:21:5A:C8:74:50,e3ab15,10.1.170.45
+dhcp-host=00:21:5A:CA:03:64,e3ab16,10.1.170.46
+
+##
+# ev1 f/rDNS
+
+# dhcp-host=D8:D3:85:BE:DD:60,e21ab1,10.3.170.31 ### cm-01 static
+dhcp-host=D8:D3:85:B7:E0:88,cc-01,10.3.170.32
+dhcp-host=D8:D3:85:BE:07:A0,e21ab3,10.3.170.33
+dhcp-host=D8:D3:85:BE:D8:F8,e21ab4,10.3.170.34
+dhcp-host=D8:D3:85:BE:D6:40,cc-02,10.3.170.35
+dhcp-host=D8:D3:85:BE:D6:00,e21ab6,10.3.170.36
+dhcp-host=D8:D3:85:BF:C1:10,e21ab7,10.3.170.37
+dhcp-host=D8:D3:85:BE:81:28,e21ab8,10.3.170.38
+dhcp-host=D8:D3:85:BE:D6:78,e21ab9,10.3.170.39
+dhcp-host=D8:D3:85:BE:6A:70,e21ab10,10.3.170.40
+dhcp-host=D8:D3:85:BD:BF:68,e21ab11,10.3.170.41
+dhcp-host=D8:D3:85:BE:07:A8,e21ab12,10.3.170.42
+dhcp-host=D8:D3:85:BD:6E:08,e21ab13,10.3.170.43
+dhcp-host=D8:D3:85:BF:61:D8,e21ab14,10.3.170.44
+dhcp-host=D8:D3:85:DF:10:88,e21ab15,10.3.170.45
+dhcp-host=D8:D3:85:BF:C1:A0,e21ab16,10.3.170.46

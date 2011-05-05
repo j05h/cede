@@ -2,11 +2,10 @@
 
 set -e
 
-### Pseudocode for now.
-
 apt-get install dnsmasq
+apt-get install apt-cacher
 
-apt-get install nginx
+### we are using python webserver...  may need to bootstrap python...
 
 
 exit 0

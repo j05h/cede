@@ -8,25 +8,25 @@ PID=${PID_HOME}/webserver.pid
 DOC_ROOT=${__FILE__}/../var/www/ubuntu
 
 case ${1} in
-  "start")
-    echo "INFO: Starting Python's SimpleHTTPServer."
+	"start")
+		echo "INFO: Starting Python's SimpleHTTPServer."
 
-    cd ${DOC_ROOT}
+		cd ${DOC_ROOT}
 
-    nohup python -m SimpleHTTPServer &
+		nohup python -m SimpleHTTPServer &
 
-    echo "${!}" > ${PID}
-  ;;
+		echo "${!}" > ${PID}
+	;;
 
-  "stop")
-    echo "INFO: Stopping Python's SimpleHTTPServer."
+	"stop")
+		echo "INFO: Stopping Python's SimpleHTTPServer."
 
-    cat ${PID} |xargs kill
-  ;;
+		cat ${PID} |xargs kill
+	;;
 
-  *)
-    echo "Usage: ${0} <start|stop>"
-  ;;
+	*)
+		echo "Usage: ${0} <start|stop>"
+	;;
 esac
 
 

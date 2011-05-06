@@ -1,25 +1,25 @@
 # This first command is run as early as possible, just after preseeding is read.
 # d-i preseed/early_command string anna-install some-udeb
 
-installer/locale string en_US
+d-i debian-installer/locale string en_US
 d-i console-setup/ask_detect boolean false
 d-i console-setup/layoutcode string us
 d-i clock-setup/utc boolean true
 d-i time/zone string UTC
 d-i clock-setup/ntp boolean true
-# d-i clock-setup/ntp-server okra
+d-i clock-setup/ntp-server time.apple.com
 
 d-i netcfg/choose_interface select auto
 
 d-i netcfg/get_hostname string unassigned-hostname
 d-i netcfg/get_domain string unassigned-domain
 
-d-i netcfg/wireless_wep string
+# d-i netcfg/wireless_wep string
 
-# d-i mirror/country string manual
-# d-i mirror/http/hostname string okra
-# d-i mirror/http/directory string /ubuntu
-# d-i mirror/http/proxy string
+d-i mirror/country string manual
+d-i mirror/http/hostname string us.archive.ubuntu.com
+d-i mirror/http/directory string /ubuntu
+d-i mirror/http/proxy string
 
 # partitioning
 d-i partman-auto/method string regular
@@ -42,7 +42,8 @@ d-i partman/confirm boolean true
 
 d-i passwd/root-login boolean true
 d-i passwd/make-user boolean false
-d-i passwd/root-password-crypted password $1$VoRLx0FE$3j0Xv8/ABh6.DzAER.mWM0
+#d-i passwd/root-password-crypted password $1$VoRLx0FE$3j0Xv8/ABh6.DzAER.mWM0
+d-i passwd/root-password-crypted password $1$m/t/lAW0$N2KqS94AXR/WkwI.YoNjH/
 #create password by running:echo "r00tme" | mkpasswd -s -H MD5
 
 tasksel tasksel/first multiselect standard, openssh-server
@@ -61,7 +62,7 @@ ssh ssh/run_sshd boolean true
 #d-i preseed/late_command string apt-install zsh; in-target chsh -s /bin/zsh
 #d-i preseed/late_command string wget ftp://username:password@192.168.0.1/myinstallscript.sh -O /target/usr/local/bin/myinstallscript.sh; chmod 777 /target/usr/local/bin/myinstallscript.sh;
 
-d-i preseed/late_command string mkdir -p /target/root/.ssh &&  wget -O /target/root/.ssh/authorized_keys http://some.host/
+d-i preseed/late_command string mkdir -p /target/root/.ssh &&  wget -O /target/root/.ssh/authorized_keys http://build-host/authorized_keys
 
 d-i grub-installer/only_debian boolean true
 d-i grub-installer/with_other_os boolean true

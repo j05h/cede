@@ -20,8 +20,14 @@ case ${1} in
     cat ${PID} |xargs kill
   ;;
 
+  "restart")
+    echo "INFO: Restarting dnsmasq."
+
+    ${0} stop && ${0} start
+  ;;
+
   *)
-    echo "Usage: ${0} <start|stop>"
+    echo "Usage: ${0} <start|stop|restart>"
   ;;
 esac
 

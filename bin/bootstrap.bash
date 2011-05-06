@@ -2,10 +2,11 @@
 
 set -e
 
+apt-get update
+apt-get upgrade
+
 apt-get install dnsmasq
 apt-get install apt-cacher
-
-### we are using python webserver...  may need to bootstrap python...
 
 
 exit 0

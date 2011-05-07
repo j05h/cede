@@ -1,2 +1,5 @@
 var/run
 nohup.out
+bin/site.bash
+srv/dnsmasq/etc/hosts
+srv/dnsmasq/etc/dnsmasq.conf

@@ -31,6 +31,13 @@ apt-get upgrade
 apt-get install dnsmasq
 apt-get install apt-cacher
 
+### Enable apt-cacher;
+
+sed -i 's/\(AUTOSTART=\).*/\11/' /etc/default/apt-cacher
+/etc/init.d/apt-cacher restart
+
+### Finished;
+
 echo
 echo "INFO: Generate configs with $(dirname ${0})/configs.bash"
 

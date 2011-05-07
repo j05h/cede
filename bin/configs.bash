@@ -15,8 +15,8 @@ FILES=(
 ### Generate Configs;
 
 for i in "${FILES[@]}"; do
-  base=${__FILE__}/../
-  source=${base}$i.template
+	base=${__FILE__}/../
+	source=${base}$i.template
 	target=${base}/$i
 
 	eval "echo \"$(cat ${source})\"" > ${target}

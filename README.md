@@ -4,8 +4,10 @@
 
 ## Usage
 
-PXE boot your hosts after executing the following:
+* Clone this repo to /opt.
+* PXE boot your hosts after executing the following:
 
+    $ cd /opt/cede
     $ ./bin/dnsmasq.bash start
     $ ./bin/webserver.bash start
     $ ./bin/bootstrap.bash

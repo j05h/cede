@@ -35,3 +35,7 @@ Created bash "recipes" to handle configuration of system roles.
   * preseed: create ubuntu user.
   * preseed: ubuntu user has sudo.
   * preseed: ubuntu user has pubkey.
+
+On firewall update /etc/hosts (automate):
+
+    $ cat srv/dnsmasq/dnsmasq.d/dhcp-hosts.paloalto | awk -F, '{print $2"\t"$3}' | sort -k 2 >> /etc/hosts

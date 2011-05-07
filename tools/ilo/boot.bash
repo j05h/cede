@@ -7,7 +7,7 @@ BLADES=${2}
 
 case ${3} in
 	"net")
-		echo "INFO: Netbooting blade(s) '${BLADES}' on ${ILO}."
+		echo "INFO: Netbooting blade(s) '${BLADES}' on '${ILO}'."
 
 		ssh ${ILO} "reboot server ${BLADES} pxe"
 	;;

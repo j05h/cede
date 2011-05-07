@@ -4,8 +4,7 @@
 
 ## Usage
 
-* Clone this repo to /opt.
-* PXE boot your hosts after executing the following:
+Clone this repo to /opt.  Now PXE boot your hosts after executing the following:
 
     $ cd /opt/cede
     $ ./bin/dnsmasq.bash start

@@ -13,7 +13,7 @@ case ${1} in
 		echo "INFO: Starting dnsmasq."
 
 		sed -i "1i\
-nameserver 127.0.0.1 ### Added by ${0}
+nameserver 127.0.0.1 ### Added by ${0};
 " ${RESOLV_CONF}
 		dnsmasq --pid-file=${PID} --conf-file=${CONF}
 	;;

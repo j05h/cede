@@ -1,5 +1,5 @@
-var/run
-nohup.out
+var/run/
+var/log/
 bin/site.bash
 srv/dnsmasq/etc/hosts
 srv/dnsmasq/etc/dnsmasq.conf

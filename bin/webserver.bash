@@ -12,9 +12,7 @@ case ${1} in
 		echo "INFO: Starting Python's SimpleHTTPServer."
 
 		cd ${DOC_ROOT}
-
-		nohup python -m SimpleHTTPServer &
-
+		python -m SimpleHTTPServer > ${LOG_HOME}/access.log 2>&1 </dev/null &
 		echo "${!}" > ${PID}
 	;;
 

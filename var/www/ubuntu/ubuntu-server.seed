@@ -50,10 +50,10 @@ tasksel tasksel/first multiselect standard, openssh-server
 d-i pkgsel/include string openssh-server curl build-essential git-core ganglia-monitor bridge-utils kvm ruby irb vim
 d-i pkgsel/update-policy select none
 
-ssh ssh/new_config  boolean true
-ssh ssh/use_old_init_script boolean true
-ssh ssh/protocol2_only boolean true
-ssh ssh/run_sshd boolean true
+openssh-server ssh/new_config  boolean true
+openssh-server ssh/use_old_init_script boolean true
+openssh-server ssh/protocol2_only boolean true
+openssh-server ssh/run_sshd boolean true
 
 # This command is run just before the install finishes, but when there is
 # still a usable /target directory. You can chroot to /target and use it

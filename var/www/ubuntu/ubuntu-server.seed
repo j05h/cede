@@ -43,7 +43,7 @@ d-i partman/confirm boolean true
 d-i passwd/root-login boolean true
 d-i passwd/make-user boolean false
 #d-i passwd/root-password-crypted password $1$VoRLx0FE$3j0Xv8/ABh6.DzAER.mWM0
-d-i passwd/root-password-crypted password $1$m/t/lAW0$N2KqS94AXR/WkwI.YoNjH/
+d-i passwd/root-password-crypted password $1$/sqZSadf$MklQ7SQk5xoZeceRYg/410
 #create password by running:echo "r00tme" | mkpasswd -s -H MD5
 
 tasksel tasksel/first multiselect standard, openssh-server

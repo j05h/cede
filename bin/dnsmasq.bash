@@ -26,8 +26,6 @@ nameserver 127.0.0.1 ### Added by ${0};
 	;;
 
 	"restart")
-		echo "INFO: Restarting dnsmasq."
-
 		${0} stop && ${0} start
 	;;
 

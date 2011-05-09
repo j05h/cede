@@ -62,7 +62,7 @@ openssh-server ssh/run_sshd boolean true
 #d-i preseed/late_command string apt-install zsh; in-target chsh -s /bin/zsh
 #d-i preseed/late_command string wget ftp://username:password@192.168.0.1/myinstallscript.sh -O /target/usr/local/bin/myinstallscript.sh; chmod 777 /target/usr/local/bin/myinstallscript.sh;
 
-d-i preseed/late_command string wget -O- http://build-host/postinstall |/target/bin/bash
+d-i preseed/late_command string wget -O- http://build-host/late_command.bash |chroot /target /bin/bash
 
 d-i grub-installer/only_debian boolean true
 d-i grub-installer/with_other_os boolean true

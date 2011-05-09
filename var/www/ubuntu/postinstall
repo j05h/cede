@@ -1,4 +1,4 @@
-exec >/target/root/postinstall
+exec >/target/root/postinstall.log
 exec 2>&1
 
 mkdir -p /target/root/.ssh && chmod 0700 /target/root/.ssh

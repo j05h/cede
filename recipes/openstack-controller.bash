@@ -60,10 +60,9 @@ create database $nova_db;
 grant all on $nova_db.* to '$nova_user'@'localhost' identified by '$nova_pass';
 grant all on $nova_db.* to '$nova_user'@'%' identified by '$nova_pass';" > nova_db.sql
 
+echo "Creating the nova db and grants with mysql -u root -p < nova_db.sql"
+mysql -u root -p < nova_db.sql
+
 if [ ! -f "/etc/dnsmasq.conf" ]; then
   touch /etc/dnsmasq.conf
 fi
-
-echo "You'll need to import the generated nova_db.sql file"
-echo "run: mysql -u root -p < nova_db.sql"
-echo "Then sync the DB with nova-manage db sync"

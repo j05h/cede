@@ -20,13 +20,21 @@ iptables -A FORWARD -i ${INTERNAL} -o ${EXTERNAL} -j ACCEPT
 iptables -A INPUT -i ${LOOPBACK} -p all -j ACCEPT
 iptables -A INPUT -i ${INTERNAL} -p all -j ACCEPT
 iptables -A INPUT -i ${EXTERNAL} -m state --state ESTABLISHED,RELATED -j ACCEPT
-iptables -A INPUT -p tcp -i ${EXTERNAL} --dport 22 -j ACCEPT
+iptables -A INPUT -p tcp -i ${EXTERNAL} --dport 6670 -j ACCEPT
 iptables -P INPUT DROP
 
 ### Save;
 
 iptables-save > ${CONF}
 chmod 0600 ${CONF}
+
+### Restore;
+
+### Secure SSH;
+
+sed -i 's/\(PermitRootLogin\) yes/\1 no/' /etc/ssh/sshd_config
+sed -i 's/#\(PasswordAuthentication\) yes/\1 no/' /etc/ssh/sshd_config
+sed -i 's/\(Port\) 22/\1 6670/' /etc/ssh/sshd_config
 
 
 exit 0

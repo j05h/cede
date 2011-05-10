@@ -10,6 +10,9 @@ apt-get -y install vlan
 
 apt-get -y install nova-compute euca2ools unzip
 
+virsh net-destroy default
+virsh net-undefine default
+
 service libvirt-bin restart
 
 echo "You will need to copy your nova.conf in place and restart compute"

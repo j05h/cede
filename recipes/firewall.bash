@@ -4,6 +4,7 @@ LOOPBACK=lo
 INTERNAL=eth0
 EXTERNAL=eth1
 CONF=/etc/iptables.conf
+RESTORE=/etc/network/if-pre-up.d/iptablesload.sh
 
 ### Setup NAT;
 
@@ -29,6 +30,17 @@ iptables-save > ${CONF}
 chmod 0600 ${CONF}
 
 ### Restore;
+
+cat >${RESTORE}<<EOF
+#!/bin/sh
+
+iptables-restore < /etc/iptables.conf
+
+
+exit 0
+EOF
+
+chmod 0755 ${RESTORE}
 
 ### Secure SSH;
 

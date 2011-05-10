@@ -6,6 +6,10 @@
 # You should also set your nova username and password in that file
 #  so it won't be overwritten by blank values when you update cede from github
 
+if [ ! -f /etc/apt/sources.list.d/nova-core-trunk-maverick.list ]; then
+  ./openstack-repo.bash
+fi
+
 my_ip=$( host $( hostname ) | awk '{ print $NF }' )
 my_subnet=$( echo $my_ip | awk -F\. '{ print $1"."$2"."$3 }' )
 
@@ -32,15 +36,13 @@ apt-get -y install rabbitmq-server
 
 apt-get -y install nova-api nova-objectstore nova-scheduler euca2ools unzip mysql-server
 
-service libvirt-bin restart
-
 # Fill out our nova.conf with the appropriate values
 cat $nova_conf_tmpl > nova.conf
 sed -i "s/%USER%/$nova_user/g" nova.conf
-sed -i "s/%PASS%/$nova_pass/g" nova.conf
+sed -i "s/%PASSWORD%/$nova_pass/g" nova.conf
 sed -i "s/%DBHOST%/$sql_host/g" nova.conf
 sed -i "s/%DATABASE%/$nova_db/g" nova.conf
-sed -i "s/%CONTROLLER/$my_ip/g" nova.conf
+sed -i "s/%CONTROLLER%/$my_ip/g" nova.conf
 sed -i "s/%VLANINTERFACE%/$vlan_interface/g" nova.conf
 sed -i "s/%PUBLICINTERFACE%/$public_interface/g" nova.conf
 sed -i "s/%GLANCE%/$glance_host/g" nova.conf
@@ -50,9 +52,18 @@ sed -i "s/%SUBNET%/$my_subnet/g" nova.conf
 cp -f nova.conf /etc/nova/nova.conf
 
 # We need to tell mysql to listen on all interfaces (not just localhost)
-sed -i "s/0.0.0.0/127.0.0.1/" /etc/mysql/my.cnf
+sed -i "s/= 127.0.0.1/= 0.0.0.0/" /etc/mysql/my.cnf
 service mysql restart
+
+echo "
+create database $nova_db;
+grant all on $nova_db.* to '$nova_user'@'localhost' identified by '$nova_pass';
+grant all on $nova_db.* to '$nova_user'@'%' identified by '$nova_pass';" > nova_db.sql
 
 if [ ! -f "/etc/dnsmasq.conf" ]; then
   touch /etc/dnsmasq.conf
 fi
+
+echo "You'll need to import the generated nova_db.sql file"
+echo "run: mysql -u root -p < nova_db.sql"
+echo "Then sync the DB with nova-manage db sync"

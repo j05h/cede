@@ -1,0 +1,35 @@
+# Template for nova.conf
+# Variables are as follows:
+# %USER% -- MySql User Name
+# %PASSWORD% -- MySql password
+# %DBHOST% -- IP of the database server
+# %DATABASE% -- Name of the OpenStack DB (generally it's just nova)
+# %CONTROLLER% -- IP Of the OpenStack Cloud Controller
+# %GLANCE% -- IP of the Glance host
+# %PUBLICINTERFACE% -- The public faceing interface
+# %VLANINTERFACE% -- The interface VLANs should attach to
+
+--sql_connection=mysql://%USER%:%PASSWORD%@%DBHOST%/%DATABASE%
+--use_ipv6=false
+--dhcpbridge_flagfile=/etc/nova/nova.conf
+--dhcpbridge=/usr/bin/nova-dhcpbridge
+--allow_admin_api=true
+--enable_zone_routing=true
+--s3_host=%CONTROLLER%
+--rabbit_host=%CONTROLLER%
+--vlan_interface=%VLANINTERFACE%
+--cc_host=%CONTROLLER%
+--glance_host=%GLANCE%
+--glance_port=9292
+--iscsi_ip_prefix=%SUBNET%
+--public_interface=%PUBLICINTERFACE%
+--quota_instances=254
+--quota_cores=1016
+--lock_path=/var/lib/nova/tmp
+--image_service=nova.image.glance.GlanceImageService
+--dnsmasq_config_file=/etc/dnsmasq.conf
+--ec2_url=http://%CONTROLLER%:8773/services/Cloud
+--logdir=/var/log/nova
+--state_path=/var/lib/nova
+--ca_path=/var/lib/nova/CA
+--verbose

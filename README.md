@@ -11,10 +11,10 @@ Install Git.
 Clone this repo to /opt.  Now PXE boot your hosts after executing the following:
 
     $ cd /opt/cede
-    $ ./bin/dnsmasq.bash start
-    $ ./bin/webserver.bash start
     $ ./bin/bootstrap.bash
     $ ./bin/configs.bash
+    $ ./bin/dnsmasq.bash start
+    $ ./bin/webserver.bash start
 
 The preseed was modified by hand from:
 

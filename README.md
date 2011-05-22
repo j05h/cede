@@ -4,6 +4,10 @@
 
 ## Usage
 
+Install Git.
+
+    $ apt-get install git
+
 Clone this repo to /opt.  Now PXE boot your hosts after executing the following:
 
     $ cd /opt/cede

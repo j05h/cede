@@ -63,6 +63,8 @@ grant all on $nova_db.* to '$nova_user'@'%' identified by '$nova_pass';" > nova_
 echo "Creating the nova db and grants with mysql -u root -p < nova_db.sql"
 mysql -u root -p < nova_db.sql
 
+nova-manage db sync
+
 if [ ! -f "/etc/dnsmasq.conf" ]; then
   touch /etc/dnsmasq.conf
 fi

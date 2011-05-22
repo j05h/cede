@@ -48,5 +48,7 @@ sed -i 's/\(PermitRootLogin\) yes/\1 no/' /etc/ssh/sshd_config
 sed -i 's/#\(PasswordAuthentication\) yes/\1 no/' /etc/ssh/sshd_config
 sed -i 's/\(Port\) 22/\1 6670/' /etc/ssh/sshd_config
 
+service ssh restart
+
 
 exit 0

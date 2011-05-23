@@ -34,7 +34,9 @@ apt-get install apt-cacher
 ### Enable apt-cacher;
 
 sed -i 's/\(AUTOSTART=\).*/\11/' /etc/default/apt-cacher
-/etc/init.d/apt-cacher restart
+sed -i 's/# \(path_map.*\)/\1/' /etc/apt-cacher/apt-cacher.conf
+
+service apt-cacher restart
 
 ### Finished;
 

@@ -19,4 +19,4 @@ apt-get -y remove apache2-mpm-worker apache2-utils apache2.2-bin apache2.2-commo
 
 apt-get -y upgrade
 
-echo "You will need to copy your nova.conf in place and restart compute"
+echo "You will need to copy your nova.conf in place, add your vlan interface (eth1 maybe?) and restart compute"

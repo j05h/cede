@@ -15,7 +15,7 @@ virsh net-undefine default
 
 service libvirt-bin restart
 
-apt-get remove apache2-mpm-worker apache2-utils apache2.2-bin apache2.2-common apache2
+apt-get -y remove apache2-mpm-worker apache2-utils apache2.2-bin apache2.2-common apache2
 
 apt-get -y upgrade
 

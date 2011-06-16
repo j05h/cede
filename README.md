@@ -29,17 +29,4 @@ To generate a preseed from an existing install:
 
 Created bash "recipes" to handle configuration of system roles.
 
-* firewall.bash: Enables natting on from eth0 -> eth1.  Also, disables all but inbound port 22.
-
-## TODO:
-
-  * firewall.bash: Save iptables.
-  * firewall.bash: Restore iptables on boot.
-  * preseed: disable ssh root login.
-  * preseed: create ubuntu user.
-  * preseed: ubuntu user has sudo.
-  * preseed: ubuntu user has pubkey.
-
-On firewall update /etc/hosts (automate):
-
-    $ cat srv/dnsmasq/dnsmasq.d/dhcp-hosts.paloalto | awk -F, '{print $2"\t"$3}' | sort -k 2 >> /etc/hosts
+* firewall.bash: Enables natting on from eth0 -> eth1.  Also, disables all but inbound SSH.

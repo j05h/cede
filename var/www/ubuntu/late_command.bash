@@ -15,4 +15,4 @@ sed -i "s/ListenAddress 0.0.0.0/&\nListenAddress ${IP}/" /etc/ssh/sshd_config
 
 ### ssh doesn't always start - make it so;
 
-sed -i 's/start on filesystem/start on (filesystem and net-device-up IFACE=eth0)/' ssh.conf /etc/init/ssh.conf
+sed -i 's/start on filesystem/start on (filesystem and net-device-up IFACE=eth0)/' /etc/init/ssh.conf

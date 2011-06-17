@@ -44,12 +44,10 @@ interface=${DHCP_INTERFACE}
 # a lease time. If you have more than one network, you will need to
 # repeat this for each network on which you want to supply DHCP
 # service.
-#### TODO: change
 dhcp-range=${DHCP_RANGE},infinite
 
 # Override the default route supplied by dnsmasq, which assumes the
 # router is the same machine as the one running dnsmasq.
-#### TODO: change
 dhcp-option=3,${PXE_HOST}
 
 # Read dhcp host entries and additional config options from here

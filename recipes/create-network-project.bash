@@ -8,13 +8,13 @@ mysql_user="nova"
 
 usage() {
   echo "USAGE: $0 [options]
-  -c  CIDR block to allocate newtwork(s) into
+  -c  CIDR block to allocate network(s) into
   -n  Number of networks to create
   -i  IPs to allocate per network
   -p  Project to create
 
   Example:
-  $0 -c 10.4.1.0/24 1 256
+  $0 -c 10.4.1.0/24 -n 1 -i 256 -p project
   "
   exit 1
 }
@@ -57,4 +57,4 @@ cd ~/creds/$project/root
 $nova_manage project zipfile $project root
 unzip nova.zip
 . novarc
-euca-run-instances ami-00000004
+euca-run-instances $( euca-describe-images | grep machine | tail -1 | awk '{ print $2 }' )

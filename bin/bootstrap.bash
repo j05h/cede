@@ -42,20 +42,21 @@ SKIPDOWNLOAD=0
 
 # If you've manually placed an extracted netboot.tar.gz in the boot directory, set SKIPDOWNLOAD = 1 above
 if [ $SKIPDOWNLOAD != 1 ]; then
-  wget http://archive.ubuntu.com/ubuntu/dists/$DISTRO/main/installer-amd64/current/images/netboot/netboot.tar.gz -O ${PROJECT_ROOT}/boot/netboot.tar.gz
+  wget http://archive.ubuntu.com/ubuntu/dists/$DISTRO/main/installer-amd64/current/images/netboot/netboot.tar.gz -O ${PROJECT_ROOT}/cede/boot/netboot.tar.gz
   if [ $? eq 8 ]; then
     echo "I seem to have gotten a 404 trying to grab http://archive.ubuntu.com/ubuntu/dists/$DISTRO/main/installer-${ARCH}/current/images/netboot/netboot.tar.gz"
-    echo "You'll want to find the correct netboot.tar.gz, place it in ${PROJECT_ROOT}/boot, extract it, and set SKIPDOWNLOAD=1 in $0"
+    echo "You'll want to find the correct netboot.tar.gz, place it in ${PROJECT_ROOT}/cede//boot, extract it, and set SKIPDOWNLOAD=1 in $0"
     echo "Quitting..."
     exit 1
   fi
 fi
 
-tar -zxvf ${PROJECT_ROOT}/boot/netboot.tar.gz && rm -f ${PROJECT_ROOT}/boot/netboot.tar.gz
+CURRENT=$( pwd )
+cd $PROJECT_ROOT/cede/boot/ && tar -zxvf netboot.tar.gz && rm -f netboot.tar.gz && cd $CURRENT
 
 ### Disable default dnsmasq, otherwise it conflicts with ours
 
-sed =i 's/ENABLED=1/ENABLED=0/' /etc/default/dnsmasq
+sed -i 's/ENABLED=1/ENABLED=0/' /etc/default/dnsmasq
 service dnsmasq stop
 
 ### Enable apt-cacher;

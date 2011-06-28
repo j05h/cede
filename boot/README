@@ -1,1 +1,3 @@
 Bootstrap.bash should populate this for you, but if you want to try using your own netboot.tar.gz you'll extract it to here and set the appropriate flag in bootstrap.bash
+
+You'll need to make sure you reference boot-screens/syslinux.cfg to point everything to the right place for preseeding, unless you have other plans

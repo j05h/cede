@@ -52,7 +52,7 @@ if [ $SKIPDOWNLOAD != 1 ]; then
 fi
 
 CURRENT=$( pwd )
-cd $PROJECT_ROOT/cede/boot/ && tar -zxvf netboot.tar.gz && rm -f netboot.tar.gz && cd $CURRENT
+cd $PROJECT_ROOT/cede/boot/ && tar -zxvf netboot.tar.gz && mv syslinux.cfg ubuntu-installer/${ARCH}/boot-screens/syslinux.cfg && rm -f netboot.tar.gz && cd $CURRENT
 
 ### Disable default dnsmasq, otherwise it conflicts with ours
 

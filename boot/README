@@ -1,0 +1,1 @@
+Bootstrap.bash should populate this for you, but if you want to try using your own netboot.tar.gz you'll extract it to here and set the appropriate flag in bootstrap.bash

@@ -43,7 +43,7 @@ SKIPDOWNLOAD=0
 # If you've manually placed an extracted netboot.tar.gz in the boot directory, set SKIPDOWNLOAD = 1 above
 if [ $SKIPDOWNLOAD != 1 ]; then
   wget http://archive.ubuntu.com/ubuntu/dists/$DISTRO/main/installer-amd64/current/images/netboot/netboot.tar.gz -O ${PROJECT_ROOT}/cede/boot/netboot.tar.gz
-  if [ $? eq 8 ]; then
+  if [ $? == 8 ]; then
     echo "I seem to have gotten a 404 trying to grab http://archive.ubuntu.com/ubuntu/dists/$DISTRO/main/installer-${ARCH}/current/images/netboot/netboot.tar.gz"
     echo "You'll want to find the correct netboot.tar.gz, place it in ${PROJECT_ROOT}/cede//boot, extract it, and set SKIPDOWNLOAD=1 in $0"
     echo "Quitting..."

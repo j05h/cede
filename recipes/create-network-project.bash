@@ -12,6 +12,7 @@ usage() {
   -n  Number of networks to create
   -i  IPs to allocate per network
   -p  Project to create
+  -v  VLAN to assign (defaults to id + 9)
 
   Example:
   $0 -c 10.4.1.0/24 -n 1 -i 256 -p project
@@ -29,6 +30,7 @@ for i; do
     -n) shift; networks=$1; shift;;
     -i) shift; ips=$1; shift;;
     -p) shift; project=$1; shift;;
+    -v) shift; vlan=$1; shift;;
   esac
 done
 
@@ -42,11 +44,16 @@ b=$( echo $cidr | awk -F. '{ print $3 }' )
 # echo "A: $a, B: $b"
 
 bridge="br_${a}_${b}"
-# vlan is id + 10 - 1
+
+
+# vlan is id + 9 unless it was specified with -v
+if [ -z $vlan ]; then
+  vlan="id + 9"
+fi
 
 echo "$nova_manage network create $cidr $networks $ips" | sh
 
-echo "set @id = ( select id from networks order by id desc limit 1 ); update networks set bridge = '$bridge' where id = @id; update networks set vlan = (id + 10 - 1) where id = @id; update fixed_ips set reserved = 1 where network_id = @id and address regexp '(\\.255$)';" > /tmp/$$.sql
+echo "set @id = ( select id from networks order by id desc limit 1 ); update networks set bridge = '$bridge' where id = @id; update networks set vlan = ($vlan) where id = @id; update fixed_ips set reserved = 1 where network_id = @id and address regexp '(\\.255$)';" > /tmp/$$.sql
 
 mysql -u $mysql_user -p $mysq_pass nova < /tmp/$$.sql
 

@@ -1,14 +1,17 @@
 #!/usr/bin/env bash
 
+set -e
+
 if [ ! -f /etc/apt/sources.list.d/nova-core-trunk-maverick.list ]; then
+  if [ ! -x ./openstack-repo.bash ]; then
+    chmod +x ./openstack-repo.bash
+  fi
   ./openstack-repo.bash
 fi
 
 apt-get -y update
 
-apt-get -y install vlan
-
-apt-get -y install nova-compute euca2ools unzip
+apt-get -y install vlan nova-compute euca2ools unzip vncviewer
 
 virsh net-destroy default
 virsh net-undefine default

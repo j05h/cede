@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 # Make sure we have the right info
 if [ -z $1 ]; then
   echo "You must provide the collector host to use"

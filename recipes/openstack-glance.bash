@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 
+set -e
+
 if [ ! -f /etc/apt/sources.list.d/nova-core-trunk-maverick.list ]; then
+  if [ ! -x ./openstack-repo.bash ]; then
+    chmod +x ./openstack-repo.bash
+  fi
   ./openstack-repo.bash
 fi
 

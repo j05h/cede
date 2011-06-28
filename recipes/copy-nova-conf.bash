@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 key=""
 
 if [ ! -f $key ]; then

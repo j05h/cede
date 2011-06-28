@@ -8,28 +8,64 @@
 # %GLANCE% -- IP of the Glance host
 # %PUBLICINTERFACE% -- The public faceing interface
 # %VLANINTERFACE% -- The interface VLANs should attach to
+# %ZONE% -- The zone name of this install
 
---sql_connection=mysql://%USER%:%PASSWORD%@%DBHOST%/%DATABASE%
+# Define our SQL connection
+--sql_connection=mysql://nova:n0vap@ss@%DBHOST%/nova
+
+# Don't use IP6
 --use_ipv6=false
+
+# DHCP Bridge Stuff (from the default nova.conf)
 --dhcpbridge_flagfile=/etc/nova/nova.conf
 --dhcpbridge=/usr/bin/nova-dhcpbridge
+
+# Allow Zones
 --allow_admin_api=true
 --enable_zone_routing=true
+--zone_name=%ZONE%
+--zone_capabilities=hypervisor=kvm,os=linux
+
+# Define availability zones
+--node_availability_zone=%ZONE%0
+--availability_zone=%ZONE%0
+
+# Setup the objectstore stuff, message queue host, etc
 --s3_host=%CONTROLLER%
 --rabbit_host=%CONTROLLER%
---vlan_interface=%VLANINTERFACE%
 --cc_host=%CONTROLLER%
---glance_host=%GLANCE%
---glance_port=9292
---iscsi_ip_prefix=%SUBNET%
---public_interface=%PUBLICINTERFACE%
---quota_instances=254
---quota_cores=1016
---lock_path=/var/lib/nova/tmp
---image_service=nova.image.glance.GlanceImageService
---dnsmasq_config_file=/etc/dnsmasq.conf
+--glance_api_servers=%CONTROLLER%:9292
+--iscsi_ip_prefix=%CONTROLLER%
 --ec2_url=http://%CONTROLLER%:8773/services/Cloud
+# --ec2_dmz_host=12.206.225.130
+# --vncproxy_url=http://12.206.225.130:6080
+--image_service=nova.image.glance.GlanceImageService
+
+# Setup networking to our environment
+--vlan_interface=%VLANINTERFACE%
+--public_interface=%PUBLICINTERFACE%
+
+# Setup quotas
+--quota_instances=9999
+--quota_cores=99999
+--quota_ram=999999
+--quota_gigabytes=999999
+
+# Misc path settings
+--lock_path=/var/lib/nova/tmp
+#--dnsmasq_config_file=/etc/dnsmasq.conf
 --logdir=/var/log/nova
 --state_path=/var/lib/nova
+--instances_path=/tmp
 --ca_path=/var/lib/nova/CA
+
+# Setup the CloudPipe image
+--vpn_image_id=7
+--use_project_ca
+--cnt_vpn_clients=5
+
+# Disable inter-project traffic unless it's explicitly allowed via a rule
+--allow_project_net_traffic=false
+
+# Turn on verbose logging
 --verbose

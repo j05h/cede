@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 
+set -e
+
 # This makes a couple of assumptions, but the main one is that your "controller" node
 # runs nova-network, nova-api, nova-* that's not nova-compute
 # You'll need to modify it if you have a different layout
 
 command="apt-get update && apt-get -y dist-upgrade"
-key="/root/.ssh/key"
+key=""
 
 if [ ! -f $key ]; then
   echo "I couldn't find your key file, have you set it correctly?"

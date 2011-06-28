@@ -38,6 +38,8 @@ apt-get install apt-cacher
 
 SKIPDOWNLOAD=0
 
+. site.bash
+
 # If you've manually placed an extracted netboot.tar.gz in the boot directory, set SKIPDOWNLOAD = 1 above
 if [ $SKIPDOWNLOAD != 1 ]; then
   wget http://archive.ubuntu.com/ubuntu/dists/$DISTRO/main/installer-amd64/current/images/netboot/netboot.tar.gz -O ${PROJECT_ROOT}/boot/netboot.tar.gz
@@ -50,6 +52,11 @@ if [ $SKIPDOWNLOAD != 1 ]; then
 fi
 
 tar -zxvf ${PROJECT_ROOT}/boot/netboot.tar.gz && rm -f ${PROJECT_ROOT}/boot/netboot.tar.gz
+
+### Disable default dnsmasq, otherwise it conflicts with ours
+
+sed =i 's/ENABLED=1/ENABLED=0/' /etc/default/dnsmasq
+service dnsmasq stop
 
 ### Enable apt-cacher;
 

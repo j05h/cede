@@ -15,7 +15,7 @@ if [ ! -f /etc/apt/sources.list.d/nova-core-trunk-maverick.list ]; then
   ./openstack-repo.bash
 fi
 
-my_ip=$( host $( hostname ) | awk '{ print $NF }' )
+my_ip=$( host $( hostname ) | head -1 | awk '{ print $NF }' )
 my_subnet=$( echo $my_ip | awk -F\. '{ print $1"."$2"."$3 }' )
 
 # Any of these can be overwritten by setting the variable in controller_env

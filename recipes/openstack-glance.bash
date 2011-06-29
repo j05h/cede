@@ -28,7 +28,7 @@ fi
 
 apt-get -y install euca2ools unzip glance
 
-sed -i "s/\(sql_connection\).*/#\1\nsql_connection = mysql:\/\/$glance_user:$glance_pass@$db_host\/$glance_db/" /etc/glance/glance.conf
+sed -i "s/\(sql_connection\).*/#\1\nsql_connection = mysql:\/\/$glance_user:$glance_pass@$db_host\/$glance_db/" /etc/glance/glance-registry.conf
 
 echo "
 create database $glance_db;

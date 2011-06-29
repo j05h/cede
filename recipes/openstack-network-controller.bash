@@ -16,3 +16,7 @@ apt-get -y install nova-network euca2ools unzip dnsmasq
 # Be sure ip forwarding is enabled or your VMs won't NAT to the world
 sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/' /etc/sysctl.conf
 sysctl -p
+
+# Disable the default dnsmasq daemon from starting
+sed -i 's/ENABLED=1/ENABLED=0/' /etc/default/dnsmasq
+service dnsmasq stop

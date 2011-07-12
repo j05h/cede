@@ -2,7 +2,7 @@
 
 set -e
 
-args=$( getopt :c:n:i:p: $* )
+args=$( getopt :c:n:i:p:v:d: $* )
 
 mysql_user="nova"
 
@@ -13,9 +13,10 @@ usage() {
   -i  IPs to allocate per network
   -p  Project to create
   -v  VLAN to assign (defaults to id + 9)
+  -d  VLAN device (which interface do we vlan tag on)
 
   Example:
-  $0 -c 10.4.1.0/24 -n 1 -i 256 -p project
+  $0 -c 10.4.1.0/24 -n 1 -i 256 -p project -v 172 -d eth1
   "
   exit 1
 }
@@ -31,9 +32,9 @@ for i; do
     -i) shift; ips=$1; shift;;
     -p) shift; project=$1; shift;;
     -v) shift; vlan=$1; shift;;
+    -d) shift; device=$1; shift;;
   esac
 done
-
 
 nova_manage=$( which nova-manage )
 # nova_manage="nova-manage"
@@ -51,9 +52,11 @@ if [ -z $vlan ]; then
   vlan="id + 9"
 fi
 
-echo "$nova_manage network create $cidr $networks $ips" | sh
+name="vlan${vlan}"
 
-echo "set @id = ( select id from networks order by id desc limit 1 ); update networks set bridge = '$bridge' where id = @id; update networks set vlan = ($vlan) where id = @id; update fixed_ips set reserved = 1 where network_id = @id and address regexp '(\\.255$)';" > /tmp/$$.sql
+echo "$nova_manage network create $name $cidr $networks $ips $vlan 0 0 0 0 $device" | sh
+
+echo "set @id = ( select id from networks order by id desc limit 1 ); update networks set bridge = '$bridge' where id = @id; update fixed_ips set reserved = 1 where network_id = @id and address regexp '(\\.255$)';" > /tmp/$$.sql
 
 mysql -u $mysql_user -p $mysq_pass nova < /tmp/$$.sql
 

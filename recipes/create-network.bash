@@ -42,29 +42,28 @@ for i; do
   esac
 done
 
-nova_manage=$( which nova-manage )
-# nova_manage="nova-manage"
+#nova_manage=$( which nova-manage )
+nova_manage="nova-manage"
 
-a=$( echo $cidr | awk -F. '{ print $2 }' )
-b=$( echo $cidr | awk -F. '{ print $3 }' )
+b=$( echo $cidr | awk -F. '{ print $2 }' )
+c=$( echo $cidr | awk -F. '{ print $3 }' )
 
-# echo "A: $a, B: $b"
+# echo "B: $b, C: $c"
 
-bridge="br_${a}_${b}"
+bridge="br_${b}_${c}"
 
 
 # vlan is id + 9 unless it was specified with -v
 if [ -z $vlan ]; then
-  id=$( echo "select id from networks order by id desc limit 1" > $$.sql && mysql -u nova --password=${mysql_pass} nova < $$.sql | tail -1  && rm -f $$.sql ) && id=$(( $id + 1 ))
+  id=$( echo "select id from networks order by id desc limit 1" > $$.sql && mysql -u ${mysql_user} --password=${mysql_pass} nova < $$.sql | tail -1  && rm -f $$.sql ) && id=$(( $id + 1 ))
   vlan=$(( id + 9 ))
 fi
 
 name="vlan${vlan}"
 
-# echo "$nova_manage network create $name $cidr $networks $ips $vlan 0 0 0 0 $device"
+echo "$nova_manage network create --label=\"$name\" --fixed_range_v4=\"$cidr\" --num_networks=\"$networks\" --network_size=\"$ips\" --vlan=\"$vlan\" --bridge_interface=\"$device\" --bridge=\"$bridge\"" | sh
+# echo "$nova_manage network create --label=\"$name\" --fixed_range_v4=\"$cidr\" --num_networks=\"$networks\" --network_size=\"$ips\" --vlan=\"$vlan\" --bridge_interface=\"$device\" --bridge=\"$bridge\""
 
-echo "$nova_manage network create $name $cidr $networks $ips $vlan 0 0 0 0 $device" | sh
+echo "set @id = ( select id from networks order by id desc limit 1 ); update fixed_ips set reserved = 1 where network_id = @id and address regexp '(\\.255$)';" > /tmp/$$.sql
 
-echo "set @id = ( select id from networks order by id desc limit 1 ); update networks set bridge = '$bridge' where id = @id; update fixed_ips set reserved = 1 where network_id = @id and address regexp '(\\.255$)';" > /tmp/$$.sql
-
-mysql -u $mysql_user --password="$mysql_pass" nova < /tmp/$$.sql
+mysql -u $mysql_user --password="$mysql_pass" nova < /tmp/$$.sql && rm /tmp/$$.sql

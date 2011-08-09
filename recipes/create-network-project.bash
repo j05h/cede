@@ -2,10 +2,6 @@
 
 set -e
 
-echo "You probably want to use create-network.bash, and not this script."
-echo "You can remove these echo lines and the exit if you really mean to use it."
-exit 1
-
 args=$( getopt :c:n:i:p: $* )
 
 mysql_user="nova"

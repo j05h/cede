@@ -8,7 +8,9 @@ set -e
 # You should also set your nova username and password in that file
 #  so it won't be overwritten by blank values when you update cede from github
 
-if [ ! -f /etc/apt/sources.list.d/nova-core-trunk-maverick.list ]; then
+release=$( lsb_release -a 2>&1 | tail -1 | grep Codename | awk '{ print $2 }' )
+
+if [ ! -f /etc/apt/sources.list.d/nova-core-trunk-$release.list ]; then
   if [ ! -x ./openstack-repo.bash ]; then
     chmod +x ./openstack-repo.bash
   fi
@@ -36,6 +38,11 @@ fi
 if [ -z $nova_user ] || [ -z $nova_pass ]; then
   echo "You must specify your nova username, password and zone"
   echo "It's recommended that you do this in controller_env"
+  exit 1
+fi
+
+if [ -z $nova_zone ]; then
+  echo "You must specify the zone in nova_zone"
   exit 1
 fi
 
@@ -77,3 +84,6 @@ nova-manage db sync
 if [ ! -f "/etc/dnsmasq.conf" ]; then
   touch /etc/dnsmasq.conf
 fi
+
+echo "Restarting services to make sure they're using the correct nova.conf"
+for i in $( ls /etc/init.d/nova-* | awk -F/ '{ print $NF }' ); do echo $i; service $i restart; done

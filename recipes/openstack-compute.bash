@@ -4,7 +4,9 @@ set -e
 
 VLAN_INTERFACE=${VLAN_INTERFACE-"eth1"}
 
-if [ ! -f /etc/apt/sources.list.d/nova-core-trunk-maverick.list ]; then
+release=$( lsb_release -a 2>&1 | tail -1 | grep Codename | awk '{ print $2 }' )
+
+if [ ! -f /etc/apt/sources.list.d/nova-core-trunk-$release.list ]; then
   if [ ! -x ./openstack-repo.bash ]; then
     chmod +x ./openstack-repo.bash
   fi

@@ -2,8 +2,10 @@
 
 set -e
 
+release=$( lsb_release -a 2>&1 | tail -1 | grep Codename | awk '{ print $2 }' )
+
 # Setup the repo if it hasn't already been done
-if [ ! -f /etc/apt/sources.list.d/nova-core-trunk-maverick.list ]; then
+if [ ! -f /etc/apt/sources.list.d/nova-core-trunk-$release.list ]; then
   if [ ! -x ./openstack-repo.bash ]; then
     chmod +x ./openstack-repo.bash
   fi

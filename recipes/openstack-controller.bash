@@ -31,13 +31,13 @@ public_interface="eth0"
 vlan_interface="eth1"
 nova_conf_tmpl="nova.conf.tmpl"
 
-if [ -f controller_env ]; then
-  . controller_env
+if [ -f .creds ]; then
+  . .creds
 fi
 
 if [ -z $nova_user ] || [ -z $nova_pass ]; then
   echo "You must specify your nova username, password and zone"
-  echo "It's recommended that you do this in controller_env"
+  echo "It's recommended that you do this in .creds"
   exit 1
 fi
 

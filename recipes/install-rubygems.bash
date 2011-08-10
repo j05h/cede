@@ -20,6 +20,7 @@ if [ "${REDHAT}" = "true" ]; then
   yum install -qy openssl openssl-devel readline readline-devel zlib zlib-devel
 elif [ "${DEBIAN}" = "true" ]; then
   apt-get install -qy build-essential libssl-dev libreadline-dev curl ssl-cert curl
+  apt-get install -qy libxslt-dev libxml2-dev
 fi
 
 ### Download Ruby;

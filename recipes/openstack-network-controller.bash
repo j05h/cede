@@ -22,3 +22,6 @@ sysctl -p
 # Disable the default dnsmasq daemon from starting
 sed -i 's/ENABLED=1/ENABLED=0/' /etc/default/dnsmasq
 service dnsmasq stop
+
+echo "Make sure you bring up any eth devices that need to be brought up for networking to work"
+echo "Specifically whatever you have set as the vlan device in your nova.conf (eth1?)"

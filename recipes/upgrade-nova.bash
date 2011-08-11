@@ -9,7 +9,7 @@ set -e
 command="apt-get update && apt-get -y dist-upgrade"
 key=""
 
-if [ ! -f $key ]; then
+if [ ! -f $key ] || [ -z $key ]; then
   echo "I couldn't find your key file, have you set it correctly?"
   exit
 fi

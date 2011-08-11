@@ -52,6 +52,9 @@ c=$( echo $cidr | awk -F. '{ print $3 }' )
 
 bridge="br_${b}_${c}"
 
+echo $bridge
+exit 1
+
 
 # vlan is id + 9 unless it was specified with -v
 if [ -z $vlan ]; then

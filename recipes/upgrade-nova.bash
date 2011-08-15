@@ -6,7 +6,7 @@ set -e
 # runs nova-network, nova-api, nova-* that's not nova-compute
 # You'll need to modify it if you have a different layout
 
-command="apt-get update && apt-get -y dist-upgrade"
+command="apt-get update && apt-get -y -o DPkg::Options=\"-force-confold\" dist-upgrade"
 key=""
 
 if [ ! -f $key ] || [ -z $key ]; then

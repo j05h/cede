@@ -25,7 +25,7 @@ echo $command | sh
 echo "If nova was upgraded you'll probably want to run nova-manage db sync"
 
 # Then we copy it to all the compute instances and restart compute
-for host in $( nova-manage service list | grep compute | awk '{ print $1 }' ); do
+for host in $( nova-manage service list | grep compute | awk '{ print $2 }' ); do
   address="${host}"
   ssh -o "StrictHostKeyChecking no" -i $key ${address} "$command"
 done

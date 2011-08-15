@@ -4,18 +4,9 @@
 echo "This is considered BETA and may not entirely work yet. Remove the exit 1 in the code if you really want to run it"
 exit 1
 
-# Install the required repos and software
-apt-get -y nstall python-software-properties
-add-apt-repository ppa:swift-core/ppa
-apt-get update
-apt-get -y install swift openssh-server
-
 # Set some variables for scripts later
 export STORAGE_LOCAL_NET_IP=10.17.1.3
 export PROXY_LOCAL_NET_IP=10.17.1.3
-
-# Make our config directory
-mkdir -p /etc/swift
 
 # Write out our initial config file
 cat >/etc/swift/swift.conf <<EOF
@@ -65,3 +56,68 @@ use = egg:swift#healthcheck
 use = egg:swift#memcache
 memcache_servers = $PROXY_LOCAL_NET_IP:11211
 EOF
+
+cd /etc/swift
+# Gotta put in your partition size, it'll be 2^$SIZE
+SIZE=17
+REPLICAS=3
+HOURS=1
+
+swift-ring-builder account.builder create $SIZE $REPLICAS $HOURS
+swift-ring-builder container.builder create $SIZE $REPLICAS $HOURS
+swift-ring-builder object.builder create $SIZE $REPLICAS $HOURS
+
+# This is where it gets hairy to script... we need to know the info about all of our nodes. I'm going to hardcode it for now and figure out how to automate it later
+## Node 1
+zone1="z1"
+zone1_ip="10.17.1.3"
+zone1_device="vdb1"
+zone1_weight="100"
+
+## Node 2
+zone2="z2"
+zone2_ip="10.17.1.4"
+zone2_device="vdb1"
+zone2_weight="100"
+
+## Node 3
+zone3="z3"
+zone3_ip="10.17.1.5"
+zone3_device="vdb1"
+zone3_weight="100"
+
+# Add each zone to the ring
+## Zone 1
+swift-ring-builder account.builder add $zone1-$zone1_ip:6002/$zone1_device $zone1_weight
+swift-ring-builder container.builder add $zone1-$zone1_ip:6001/$zone1_device $zone1_weight
+swift-ring-builder object.builder add $zone1-$zone1_ip:6000/$zone1_device $zone1_weight
+
+## Zone 2
+swift-ring-builder account.builder add $zone2-$zone2_ip:6002/$zone2_device $zone2_weight
+swift-ring-builder container.builder add $zone2-$zone2_ip:6001/$zone2_device $zone2_weight
+swift-ring-builder object.builder add $zone2-$zone2_ip:6000/$zone2_device $zone2_weight
+
+## Zone 3
+swift-ring-builder account.builder add $zone3-$zone3_ip:6002/$zone3_device $zone3_weight
+swift-ring-builder container.builder add $zone3-$zone3_ip:6001/$zone3_device $zone3_weight
+swift-ring-builder object.builder add $zone3-$zone3_ip:6000/$zone3_device $zone3_weight
+
+# Now we verify each ring's contents
+swift-ring-builder account.builder
+swift-ring-builder container.builder
+swift-ring-builder object.builder
+
+# And finally rebalance them
+swift-ring-builder account.builder rebalance
+swift-ring-builder container.builder rebalance
+swift-ring-builder object.builder rebalance
+
+# Make sure /etc/swift exists on all of our storage nodes
+ssh_key="/root/.ssh/kb718q.key"
+for i in "$zone1_ip $zone2_ip $zone3_ip"; do
+  ssh -i $ssh_key $i "mkdir -p /etc/swift"
+  for j in "account.ring.gz container.ring.gz object.ring.gz"; do
+    scp -i $ssh_key $j $i:/etc/swift/
+  done
+  ssh -i $ssh_key $i "chown -R swift:swift /etc/swift"
+done

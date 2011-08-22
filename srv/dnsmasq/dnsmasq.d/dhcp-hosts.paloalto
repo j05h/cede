@@ -10,3 +10,5 @@ dhcp-host=D4:85:64:4E:5E:A8,enc2b11,192.168.100.18
 dhcp-host=D4:85:64:4E:6F:E8,enc2b12,192.168.100.19
 dhcp-host=D4:85:64:4E:6F:B8,enc2b13,192.168.100.20
 dhcp-host=D4:85:64:4E:7F:A8,enc2b14,192.168.100.21
+dhcp-host=D4:85:64:74:F7:F8,schlage1,192.168.100.22
+dhcp-host=D4:85:64:74:A8:F2,schlage2,192.168.100.23

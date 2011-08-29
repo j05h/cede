@@ -45,7 +45,7 @@ if [ $SKIPDOWNLOAD != 1 ]; then
   wget http://archive.ubuntu.com/ubuntu/dists/$DISTRO/main/installer-amd64/current/images/netboot/netboot.tar.gz -O ${PROJECT_ROOT}/cede/boot/netboot.tar.gz
   if [ $? == 8 ]; then
     echo "I seem to have gotten a 404 trying to grab http://archive.ubuntu.com/ubuntu/dists/$DISTRO/main/installer-${ARCH}/current/images/netboot/netboot.tar.gz"
-    echo "You'll want to find the correct netboot.tar.gz, place it in ${PROJECT_ROOT}/cede//boot, extract it, and set SKIPDOWNLOAD=1 in $0"
+    echo "You'll want to find the correct netboot.tar.gz, place it in ${PROJECT_ROOT}/cede/boot, extract it, and set SKIPDOWNLOAD=1 in $0"
     echo "Quitting..."
     exit 1
   fi

@@ -114,9 +114,11 @@ swift-ring-builder object.builder rebalance
 
 # Make sure /etc/swift exists on all of our storage nodes
 ssh_key="/root/.ssh/kb718q.key"
-for i in "$zone1_ip $zone2_ip $zone3_ip"; do
+current=$( pwd )
+cd /etc/swift
+for i in "$zone1_ip" "$zone2_ip" "$zone3_ip"; do
   ssh -i $ssh_key $i "mkdir -p /etc/swift"
-  for j in "account.ring.gz container.ring.gz object.ring.gz"; do
+  for j in "account.ring.gz" "container.ring.gz" "object.ring.gz" "swift.conf"; do
     scp -i $ssh_key $j $i:/etc/swift/
   done
   ssh -i $ssh_key $i "chown -R swift:swift /etc/swift"

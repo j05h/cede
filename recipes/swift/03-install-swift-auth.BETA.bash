@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+. .env
+
 apt-get -y install swift-auth
 
 
@@ -12,7 +14,7 @@ user = swift
 pipeline = auth-server
 [app:auth-server]
 use = egg:swift#auth
-default_cluster_url = https://<openstack01>:8080/v1 
+default_cluster_url = https://$zone1_ip:8080/v1 
 
 # Highly recommended to change this key to something else!
 super_admin_key = devauth

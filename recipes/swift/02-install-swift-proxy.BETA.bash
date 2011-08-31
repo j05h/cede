@@ -4,6 +4,8 @@
 echo "This is considered BETA and may not entirely work yet. Remove the exit 1 in the code if you really want to run it"
 exit 1
 
+. .env
+
 # Write out our initial config file
 cat >/etc/swift/swift.conf <<EOF
 [swift-hash]

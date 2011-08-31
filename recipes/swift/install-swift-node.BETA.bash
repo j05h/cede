@@ -13,6 +13,9 @@ mkfs.xfs -f -i size=1024 $device
 
 echo "${device}1 /srv/node/${device}1 vfs noatime,nodirtime,nobarrier,logbufs=8 0 0" >> /etc/fstab
 
+# Get our IP address
+my_ip=$( ifconfig eth0 | grep "inet addr" | awk '{ print $2 }' | awk -F: '{ print $2 }' )
+
 # Setup the directories for swift to use it
 mkdir -p /srv/node/${device}1
 mount /srv/node/${device}1
@@ -24,7 +27,7 @@ uid = swift
 gid = swift
 log file = /var/log/rsyncd.log
 pid file = /var/run/rsyncd.pid
-address = $STORAGE_LOCAL_NET_IP
+address = $my_ip
 
 [account]
 max connections = 2
@@ -54,7 +57,7 @@ service rsyncd start
 # Create account-server.conf
 cat >/etc/swift/account-server.conf <<EOF
 [DEFAULT]
-bind_ip = $STORAGE_LOCAL_NET_IP
+bind_ip = $my_ip
 workers = 2
 
 [pipeline:main]
@@ -72,7 +75,7 @@ EOF
 
 cat >/etc/swift/container-server.conf <<EOF
 [DEFAULT]
-bind_ip = $STORAGE_LOCAL_NET_IP
+bind_ip = $my_ip
 workers = 2
 
 [pipeline:main]
@@ -90,7 +93,7 @@ EOF
 
 cat >/etc/swift/object-server.conf <<EOF
 [DEFAULT]
-bind_ip = $STORAGE_LOCAL_NET_IP
+bind_ip = $my_ip
 workers = 2
 
 [pipeline:main]

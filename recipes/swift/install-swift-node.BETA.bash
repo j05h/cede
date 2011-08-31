@@ -7,11 +7,12 @@ apt-get -y install swift swift-account swift-container swift-object xfsprogs rsy
 
 # Format and mount the device we want to use
 device="/dev/vdb"
-echo -e "n\np\n1\n\n\nt\n83\nw" | fdisk $device
+# echo -e "n\np\n1\n\nw\n" | fdisk $device
+fdisk $device
 
 mkfs.xfs -f -i size=1024 $device
 
-echo "${device}1 /srv/node/${device}1 xfs noatime,nodirtime,nobarrier,logbufs=8 0 0" >> /etc/fstab
+echo "${device}1 /srv/node/${device}1 xfs noatime,nodiratime,nobarrier,logbufs=8 0 0" >> /etc/fstab
 
 # Get our IP address
 my_ip=$( ifconfig eth0 | grep "inet addr" | awk '{ print $2 }' | awk -F: '{ print $2 }' )

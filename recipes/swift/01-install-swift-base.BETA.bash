@@ -6,9 +6,11 @@
 echo "This is considered BETA and may not entirely work yet. Remove the exit 1 in the code if you really want to run it"
 exit 1
 
+repo="ppa:swift-core/release"
+
 # Install the required repos and software
 apt-get -y install python-software-properties
-add-apt-repository ppa:swift-core/release
+add-apt-repository $repo
 apt-get update
 apt-get -y install swift openssh-server
 
@@ -27,7 +29,7 @@ chown -R swift:swift /etc/swift/
 
 # Create the environment on our nodes
 for i in $zone1_ip $zone2_ip $zone3_ip; do
-  ssh -i $ssh_key $i "apt-get -y install python-software-properties && add-apt-repository ppa:swift-core/ppa && apt-get update && apt-get -y install swift openssh-server && mkdir -p /etc/swift"
+  ssh -i $ssh_key $i "apt-get -y install python-software-properties && add-apt-repository $repo && apt-get update && apt-get -y install swift openssh-server && mkdir -p /etc/swift"
   scp -i $ssh_key /etc/swift/swift.conf $i:/etc/swift
   ssh -i $ssh_key $i "chown -R swift:swift /etc/swift"
 done

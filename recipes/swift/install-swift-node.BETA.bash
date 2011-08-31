@@ -110,14 +110,14 @@ use = egg:swift#object
 EOF
 
 # Start the storage services
-swift-init object-server start 
-swift-init object-replicator start 
-swift-init object-updater start 
-swift-init object-auditor start 
-swift-init container-server start 
-swift-init container-replicator start 
-swift-init container-updater start 
-swift-init container-auditor start 
-swift-init account-server start 
-swift-init account-replicator start 
+swift-init object-server start
+swift-init object-replicator start
+swift-init object-updater start
+swift-init object-auditor start
+swift-init container-server start
+swift-init container-replicator start
+swift-init container-updater start
+swift-init container-auditor start
+swift-init account-server start
+swift-init account-replicator start
 swift-init account-auditor start

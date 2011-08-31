@@ -101,3 +101,5 @@ for i in "$zone1_ip" "$zone2_ip" "$zone3_ip"; do
   done
   ssh -i $ssh_key $i "chown -R swift:swift /etc/swift"
 done
+
+swift-init proxy start

@@ -2,11 +2,6 @@
 
 . env
 
-# Install the required repos and software
-apt-get -y install python-software-properties
-add-apt-repository ppa:swift-core/ppa
-apt-get update
-
 # Install the packages
 apt-get -y install swift swift-account swift-container swift-object xfsprogs
 

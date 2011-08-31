@@ -1,0 +1,4 @@
+BE SURE YOU DO ALL THESE THINGS BEFORE YOU START!
+
+1) Setup .env for your specific environment. Because this is beta it's hardcoded to assume 3 nodes
+2) Put the node's ssh key in place. THIS IS IMPORTANT

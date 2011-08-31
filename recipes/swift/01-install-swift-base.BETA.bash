@@ -12,7 +12,7 @@ repo="ppa:swift-core/release"
 apt-get -y install python-software-properties
 add-apt-repository $repo
 apt-get update
-apt-get -y install swift openssh-server rsyncd
+apt-get -y install swift openssh-server rsync
 
 # Make our config directory
 mkdir -p /etc/swift

@@ -9,7 +9,7 @@ apt-get -y install swift swift-account swift-container swift-object xfsprogs
 device="/dev/vdb"
 echo -e "n\np\n1\n\n\nt\n83\nw" | fdisk $device
 
-mkfs.xfs -i size=1024 $device
+mkfs.xfs -f -i size=1024 $device
 
 echo "${device}1 /srv/node/${device}1 vfs noatime,nodirtime,nobarrier,logbufs=8 0 0" >> /etc/fstab
 

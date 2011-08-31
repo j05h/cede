@@ -24,6 +24,7 @@ EOF
 swift-init auth start
 
 # Make sure the auth.db is owned by swift and not root
+sleep 2
 chown swift:swift /etc/swift/auth.db
 
 # And retart for good measure

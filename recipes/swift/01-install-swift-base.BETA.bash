@@ -8,7 +8,7 @@ exit 1
 
 # Install the required repos and software
 apt-get -y install python-software-properties
-add-apt-repository ppa:swift-core/ppa
+add-apt-repository ppa:swift-core/release
 apt-get update
 apt-get -y install swift openssh-server
 

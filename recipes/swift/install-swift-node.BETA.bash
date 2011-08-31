@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+. env
+
 # Install the packages
 apt-get install swift-account swift-container swift-object xfsprogs
 

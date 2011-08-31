@@ -4,10 +4,6 @@
 echo "This is considered BETA and may not entirely work yet. Remove the exit 1 in the code if you really want to run it"
 exit 1
 
-# Set some variables for scripts later
-export STORAGE_LOCAL_NET_IP=10.17.1.3
-export PROXY_LOCAL_NET_IP=10.17.1.3
-
 # Write out our initial config file
 cat >/etc/swift/swift.conf <<EOF
 [swift-hash]
@@ -67,25 +63,6 @@ swift-ring-builder account.builder create $SIZE $REPLICAS $HOURS
 swift-ring-builder container.builder create $SIZE $REPLICAS $HOURS
 swift-ring-builder object.builder create $SIZE $REPLICAS $HOURS
 
-# This is where it gets hairy to script... we need to know the info about all of our nodes. I'm going to hardcode it for now and figure out how to automate it later
-## Node 1
-zone1="z1"
-zone1_ip="10.17.1.3"
-zone1_device="vdb1"
-zone1_weight="100"
-
-## Node 2
-zone2="z2"
-zone2_ip="10.17.1.4"
-zone2_device="vdb1"
-zone2_weight="100"
-
-## Node 3
-zone3="z3"
-zone3_ip="10.17.1.5"
-zone3_device="vdb1"
-zone3_weight="100"
-
 # Add each zone to the ring
 ## Zone 1
 swift-ring-builder account.builder add $zone1-$zone1_ip:6002/$zone1_device $zone1_weight
@@ -113,7 +90,6 @@ swift-ring-builder container.builder rebalance
 swift-ring-builder object.builder rebalance
 
 # Make sure /etc/swift exists on all of our storage nodes
-ssh_key="/root/.ssh/kb718q.key"
 current=$( pwd )
 cd /etc/swift
 for i in "$zone1_ip" "$zone2_ip" "$zone3_ip"; do

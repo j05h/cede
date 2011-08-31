@@ -1,0 +1,22 @@
+# Set some variables for scripts later
+export STORAGE_LOCAL_NET_IP=10.17.1.3
+export PROXY_LOCAL_NET_IP=10.17.1.3
+
+# This is where it gets hairy to script... we need to know the info about all of our nodes. I'm going to hardcode it for now and figure out how to automate it later
+## Node 1
+export zone1="z1"
+export zone1_ip="10.17.1.3"
+export zone1_device="vdb1"
+export zone1_weight="100"
+
+## Node 2
+export zone2="z2"
+export zone2_ip="10.17.1.4"
+export zone2_device="vdb1"
+export zone2_weight="100"
+
+## Node 3
+export zone3="z3"
+export zone3_ip="10.17.1.5"
+export zone3_device="vdb1"
+export zone3_weight="100"

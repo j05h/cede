@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+. env
+
 # Since this is a work in progress you must remove this to actually make it run
 echo "This is considered BETA and may not entirely work yet. Remove the exit 1 in the code if you really want to run it"
 exit 1
@@ -9,10 +11,6 @@ apt-get -y install python-software-properties
 add-apt-repository ppa:swift-core/ppa
 apt-get update
 apt-get -y install swift openssh-server
-
-# Set some variables for scripts later
-export STORAGE_LOCAL_NET_IP=10.17.1.3
-export PROXY_LOCAL_NET_IP=10.17.1.3
 
 # Make our config directory
 mkdir -p /etc/swift

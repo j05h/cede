@@ -8,12 +8,11 @@ add-apt-repository ppa:swift-core/ppa
 apt-get update
 
 # Install the packages
-apt-get -y install swift-account swift-container swift-object xfsprogs
+apt-get -y install swift swift-account swift-container swift-object xfsprogs
 
 # Format and mount the device we want to use
 device="/dev/vdb"
 echo -e "n\np\n1\n\n\nt\n83\nw" | fdisk $device
-mkfs $device
 
 mkfs.xfs -i size=1024 $device
 

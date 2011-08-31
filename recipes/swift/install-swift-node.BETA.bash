@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-. env
+. .env
 
 # Install the packages
 apt-get -y install swift swift-account swift-container swift-object xfsprogs
@@ -18,17 +18,13 @@ mkdir -p /srv/node/${device}1
 mount /srv/node/${device}1
 chown -R swift:swift /srv/node
 
-# Get our IP address
-my_ip=$( ifconfig eth0 | grep "inet addr" | awk '{ print $2 }' | awk -F: '{ print $2 }' )
-
 # Generate the rsyncd.conf
 cat >/etc/rsyncd.conf <<EOF
-
 uid = swift
 gid = swift
 log file = /var/log/rsyncd.log
 pid file = /var/run/rsyncd.pid
-address = $my_ip
+address = $STORAGE_LOCAL_NET_IP
 
 [account]
 max connections = 2
@@ -38,7 +34,7 @@ lock file = /var/lock/account.lock
 
 [container]
 max connections = 2
-path = /srv/node
+path = /srv/node/
 read only = false
 lock file = /var/lock/container.lock
 
@@ -58,14 +54,13 @@ service rsyncd start
 # Create account-server.conf
 cat >/etc/swift/account-server.conf <<EOF
 [DEFAULT]
-bind_ip = $my_ip
+bind_ip = $STORAGE_LOCAL_NET_IP
 workers = 2
 
 [pipeline:main]
 pipeline = account-server
-mount_check = false
 
-[account-server]
+[app:account-server]
 use = egg:swift#account
 
 [account-replicator]
@@ -77,13 +72,13 @@ EOF
 
 cat >/etc/swift/container-server.conf <<EOF
 [DEFAULT]
-bind_ip = $my_ip
+bind_ip = $STORAGE_LOCAL_NET_IP
 workers = 2
 
 [pipeline:main]
 pipeline = container-server
 
-[container-server]
+[app:container-server]
 use = egg:swift#container
 
 [container-replicator]
@@ -95,10 +90,13 @@ EOF
 
 cat >/etc/swift/object-server.conf <<EOF
 [DEFAULT]
-bind_ip = $my_ip
+bind_ip = $STORAGE_LOCAL_NET_IP
 workers = 2
 
 [pipeline:main]
+pipeline = object-server
+
+[app:object-server]
 use = egg:swift#object
 
 [object-replicator]

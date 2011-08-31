@@ -3,7 +3,7 @@
 . .env
 
 # Install the packages
-apt-get -y install swift swift-account swift-container swift-object xfsprogs
+apt-get -y install swift swift-account swift-container swift-object xfsprogs rsync
 
 # Format and mount the device we want to use
 device="/dev/vdb"
@@ -52,7 +52,7 @@ EOF
 sed -i 's/RSYNC_ENABLE=false/RSYNC_ENABLE=true/' /etc/default/rsync
 
 # Fire up the rsyncd
-service rsyncd start
+service rsync start
 
 # Create account-server.conf
 cat >/etc/swift/account-server.conf <<EOF

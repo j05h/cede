@@ -5,7 +5,7 @@ echo "This is considered BETA and may not entirely work yet. Remove the exit 1 i
 exit 1
 
 # Install the required repos and software
-apt-get -y nstall python-software-properties
+apt-get -y install python-software-properties
 add-apt-repository ppa:swift-core/ppa
 apt-get update
 apt-get -y install swift openssh-server

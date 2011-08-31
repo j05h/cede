@@ -11,7 +11,7 @@ echo -e "n\np\n1\n\n\nt\n83\nw" | fdisk $device
 
 mkfs.xfs -f -i size=1024 $device
 
-echo "${device}1 /srv/node/${device}1 vfs noatime,nodirtime,nobarrier,logbufs=8 0 0" >> /etc/fstab
+echo "${device}1 /srv/node/${device}1 xfs noatime,nodirtime,nobarrier,logbufs=8 0 0" >> /etc/fstab
 
 # Get our IP address
 my_ip=$( ifconfig eth0 | grep "inet addr" | awk '{ print $2 }' | awk -F: '{ print $2 }' )

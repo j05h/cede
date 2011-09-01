@@ -6,12 +6,13 @@
 apt-get -y install swift swift-account swift-container swift-object xfsprogs rsync
 
 # Format and mount the device we want to use
-device="/dev/vdb"
-echo -e "n\np\n1\n\n\nt\n83\nw" | fdisk $device
+device_path="/dev/vdb"
+device=$( echo $device_path | awk -F\/ '{ print $NF }' )
+echo -e "n\np\n1\n\n\nt\n83\nw" | fdisk $device_path
 
-mkfs.xfs -f -i size=1024 ${device}1
+mkfs.xfs -f -i size=1024 ${device_path}1
 
-echo "${device}1 /srv/node/${device}1 xfs noatime,nodiratime,nobarrier,logbufs=8 0 0" >> /etc/fstab
+echo "${device_path}1 /srv/node/${device}1 xfs noatime,nodiratime,nobarrier,logbufs=8 0 0" >> /etc/fstab
 
 # Get our IP address
 my_ip=$( ifconfig eth0 | grep "inet addr" | awk '{ print $2 }' | awk -F: '{ print $2 }' )

@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 # Since this is a work in progress you must remove this to actually make it run
-echo "This is considered BETA and may not entirely work yet. Remove the exit 1 in the code if you really want to run it"
-exit 1
+#echo "This is considered BETA and may not entirely work yet. Remove the exit 1 in the code if you really want to run it"
+#exit 1
 
 . .env
 

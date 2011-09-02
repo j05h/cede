@@ -20,12 +20,12 @@ optparse = OptionParser.new do |opts|
 
   options[:units] = "days"
   opts.on( '-u', '--units [minutes|hours|days]', [:minutes, :hours, :days], 'Units to calculate the instance age in (combine with -t). Defaults to days') do |units|
-    options[:units] = units
+    options[:units] = units.to_s
   end
 
   options[:time] = "30"
   opts.on( '-t', '--time UNITS', 'Kill an instance if it\'s older than this many units (combined with -u). Defaults to 30') do |days|
-    options[:time] = days
+    options[:time] = days.to_i
   end
 
   options[:admin] = false
@@ -53,7 +53,7 @@ creds = options[:creds]
 
 # Get our list of instances
 if (options[:admin])
-  unless options[:project]
+  unless project
     puts "When running in admin mode you must specify -p"
     exit 1
   end
@@ -62,40 +62,24 @@ else
   instances = `source #{creds} && euca-describe-instances | awk '/INSTANCE/ {print $2, $(NF-1)}'`
 end
 
-# A few variables to make time conversion simpler
-minutes = 60
-hours = (60 * 60)
-days = (60 * 60 * 24)
+units = case options[:units]
+  when "minutes"
+     60
+  when "hours"
+     60 * 60
+  when "days"
+     60 * 60 * 24
+  end
 
+offset =  options[:time] * 
 # Array to hold instances we want to kill
 kill_instances = []
 
 # Create an array and iterate over it
+kill_date = Time.now - offset
 instances.split("\n").each do |instance|
-  (instance_id, launch_date) = instance.split(/\s+/)
-  launched = Time.parse(launch_date)
-
-  case options[:units].to_s
-  when "minutes"
-    kill_date = launched + (options[:time].to_i * (minutes))
-  when "hours"
-    kill_date = launched + (options[:time].to_i * (hours))
-  when "days"
-    kill_date = launched + (options[:time].to_i * (days))
-  else
-    puts "Something went wrong, aborting"
-    exit
-  end
-
-  if(Time.now > kill_date)
-    kill_instances << instance_id
-  end
+  instance_id, launch_date = instance.split(/\s+/)
+  kill_instances << instance_id if kill_date > Time.parse(launch_date)
 end
 
-kill_string = ""
-kill_instances.each do |instance|
-  kill_string = kill_string + " " + instance
-end
-
-# puts kill_string
-puts "euca-terminate-instances #{kill_string}"
+puts "euca-terminate-instances #{kill_instances.join(' ')}"

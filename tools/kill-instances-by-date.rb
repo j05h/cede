@@ -6,7 +6,7 @@ require 'optparse'
 options = {}
 
 optparse = OptionParser.new do |opts|
-  opts.banner = "Usage: #{$0} -p|--project -c|--creds [-d|--days] [-h|--help]"
+  opts.banner = "Usage: #{$0} -p|--project -c|--creds [-u|--units] [-t|--time] [-h|--help]"
 
   options[:project] = nil
   opts.on( '-p', '--project PROJECT', 'Project to scan for old instances. Required for, and only works with, -a') do |project|
